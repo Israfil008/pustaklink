@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { db } from '../lib/firebase'; // Import your Firebase config
+import { collection, addDoc } from 'firebase/firestore'; // Firestore functions
 
 export default function CreateBook() {
   const [title, setTitle] = useState('');
@@ -9,11 +11,34 @@ export default function CreateBook() {
   const [level, setLevel] = useState('');
   const [location, setLocation] = useState('');
   const [contact, setContact] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ title, author, price, level, location, contact });
-    // 🔥 Here we'll later add Firebase upload
+    setLoading(true); // Set loading state while saving data
+
+    try {
+      await addDoc(collection(db, "books"), {
+        title,
+        author,
+        price,
+        level,
+        location,
+        contact,
+      });
+
+      alert("Book added successfully!");
+      setTitle('');
+      setAuthor('');
+      setPrice('');
+      setLevel('');
+      setLocation('');
+      setContact('');
+    } catch (error) {
+      alert("Error adding book: " + error);
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -67,8 +92,12 @@ export default function CreateBook() {
           required
         />
 
-        <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700">
-          Submit Book
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 disabled:bg-gray-400"
+        >
+          {loading ? "Submitting..." : "Submit Book"}
         </button>
       </form>
     </main>
