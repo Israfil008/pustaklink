@@ -1,9 +1,13 @@
+'use client';
+
+import React from 'react';
+
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-white text-gray-800 px-4">
       <h1 className="text-5xl font-bold text-center mb-6">PustakLink</h1>
 
-      <p className="text-2xl italic text-center text-gray-600 max-w-xl">
+      <p className="text-2xl italic text-center text-gray-600 max-w-xl text-center">
         "You always buy a book by judging its cover."
       </p>
 
