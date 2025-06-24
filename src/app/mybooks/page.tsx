@@ -60,7 +60,7 @@ export default function MyBooksPage() {
     try {
       await deleteDoc(doc(db, 'books', id));
       setBooks(books.filter((book) => book.id !== id));
-    } catch (err) {
+    } catch {
       alert('Failed to delete book.');
     }
   };
@@ -80,7 +80,8 @@ export default function MyBooksPage() {
       {loading ? (
         <p className="text-center text-gray-500">Loading...</p>
       ) : books.length === 0 ? (
-        <p className="text-center text-gray-500">You haven't uploaded any books yet.</p>
+        <p className="text-center text-gray-500">You haven&rsquo;t uploaded any books yet.</p>
+
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {books.map((book) => (
