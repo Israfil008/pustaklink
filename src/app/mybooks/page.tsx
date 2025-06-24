@@ -54,8 +54,8 @@ export default function MyBooksPage() {
   }, [user]);
 
   const handleDelete = async (id: string) => {
-    const confirm = window.confirm('Are you sure you want to delete this book?');
-    if (!confirm) return;
+    const confirmDelete = window.confirm('Are you sure you want to delete this book?');
+    if (!confirmDelete) return;
 
     try {
       await deleteDoc(doc(db, 'books', id));
@@ -81,7 +81,6 @@ export default function MyBooksPage() {
         <p className="text-center text-gray-500">Loading...</p>
       ) : books.length === 0 ? (
         <p className="text-center text-gray-500">You haven&rsquo;t uploaded any books yet.</p>
-
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {books.map((book) => (
@@ -105,6 +104,15 @@ export default function MyBooksPage() {
               <p className="text-sm">📍 {book.location}</p>
               <p className="text-sm">📞 {book.contact}</p>
 
+              {/* Edit button */}
+              <a
+                href={`/edit/${book.id}`}
+                className="absolute top-2 left-2 px-2 py-1 text-sm bg-yellow-500 text-white rounded hover:bg-yellow-600"
+              >
+                Edit
+              </a>
+
+              {/* Delete button */}
               <button
                 onClick={() => handleDelete(book.id)}
                 className="absolute top-2 right-2 px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
